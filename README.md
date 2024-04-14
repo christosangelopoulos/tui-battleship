@@ -64,7 +64,7 @@ Opening the game, the user  through the main menu, can:
  - Just exit the game (`q`,`Q`)
 
 ---
-##Play
+## Play
 
 You take turns with the computer, hitting squares in each other's grids.
 
