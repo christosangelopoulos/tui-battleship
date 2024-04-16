@@ -42,7 +42,7 @@ Running with hardcoded default values."
 
 function show_hiscores ()
 {
- echo -e "${C0} ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╗ \n ║ ${C1}T${C0} │ ${C1}O${C0} │ ${C1}P${C0} │ ${C3}-${C0} │ ${C1}T${C0} │ ${C1}E${C0} │ ${C1}N${C0} ║\n ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╝"
+ echo -e "                          ${C0} ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╗ \n                           ║ ${C1}T${C0} │ ${C1}O${C0} │ ${C1}P${C0} │ ${C3}-${C0} │ ${C1}T${C0} │ ${C1}E${C0} │ ${C1}N${C0} ║\n                           ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╝"
  if [[ -f "$SHARE_DIR/hiscores.txt" ]]&&[[ -n $(cat "$SHARE_DIR/hiscores.txt") ]]
  then
   TOP_10_LENGTH=$(cat "$SHARE_DIR/hiscores.txt"|wc -l)
@@ -50,12 +50,12 @@ function show_hiscores ()
   ii=31;i=1;
   while [[ $i -le $TOP_10_LENGTH ]]
   do
-   echo -e '\e['${ii}m$i $(sort -h "$SHARE_DIR/hiscores.txt" |head -$i|tail +$i)
+   echo -e '                              \e['${ii}m$i $(sort -h "$SHARE_DIR/hiscores.txt" |head -$i|tail +$i)
    sleep 0.3
    ((i++));((ii++))
    if [[ $ii -gt 36 ]];then ii=31;fi;
   done
- else echo -e "No statistics available just yet."
+ else echo -e "                    No statistics available just yet."
  fi
  tput civis; #make cursor disappear
 }
@@ -362,10 +362,10 @@ function mv_cursor ()
 function lose_game()
 {
  print_matrix
- echo -e " ${J}${C3}A SAD DAY!${n}\n ${C1}The computer bombed and sank all your ships in $CPU_TRIES tries.${n}"
+ echo -e "                                     ${J}${C3}A SAD DAY!${n}\n             ${C1}The computer bombed and sank all your ships in $CPU_TRIES tries.${n}"
  [[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "You were DEFEATED after $CPU_TRIES tries."
- sleep 3
-  echo -e "${C0}Press any key to return to the main menu${n}";read -sn 1 vw;db="M";clear;
+ sleep 5
+  echo -e "                     ${C0}Press any key to return to the main menu${n}";read -sn 1 vw;db="M";clear;
 }
 
 function win_game()
@@ -379,16 +379,16 @@ function win_game()
   TENTH="$(sort -h "$SHARE_DIR/hiscores.txt"|head -10|tail -1|awk '{print $1}')"
  fi
  SCORELINE="$USR_TRIES $(date +%Y-%m-%d\ %T) "
- echo -e " ${J}${C3}MISSION ACCOMPLISHED!!!${n}\n ${C1}You bombed all enemy ships in $USR_TRIES tries.${n}"
+ echo -e "                               ${J}${C3}MISSION ACCOMPLISHED!!!${n}\n                        ${C1}You bombed all enemy ships in $USR_TRIES tries.${n}"
  [[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "VICTORY in $USR_TRIES tries!"
  if [ "$USR_TRIES" -lt "$TENTH" ]||[[ "$(cat "$SHARE_DIR/hiscores.txt"|wc -l)" -lt 10 ]]
  then
   echo $SCORELINE>>"$SHARE_DIR/hiscores.txt"
-  echo -e " ${C1}That's right, you made it to the${n}"
+  echo -e "                          ${C1}That's right, you made it to the${n}"
   show_hiscores
  fi
- sleep 3
- echo -e "${C0}Press any key to return to the main menu${n}";read -sn 1 vw;db="M";clear;
+ sleep 5
+ echo -e "                     ${C0}Press any key to return to the main menu${n}";read -sn 1 vw;db="M";clear;
 }
 
 function new_game()
@@ -397,17 +397,16 @@ function new_game()
  USR_TRIES=0
  CPU_HITS=0
  CPU_TRIES=0
- echo -e "${C2}Good luck! ${n}">>$SHARE_DIR/tui-battleship.log
  FOLLOW=0
  load_grids
  populate
-  if [[ $switch_populate == 1 ]];then PLACE_SHIPS='auto';load_grids;populate;PLACE_SHIPS=manual;switch_populate='';fi
-  echo -e "${C0}┏━━━┯━━━┯━━━┓\n${C0}┃ ${C2}T ${C0}│${C2} U ${C0}│${C2} I ${C0}┃\n${C0}┗━━━╅───┼───╄━━━┯━━━┯━━━┯━━━┓\n${C0}    ┃ ${C2}B ${C0}│${C2} A ${C0}│${C2} T ${C0}│${C2} T ${C0}│${C6} L ${C0}│${C6} E ${C0}┃\n${C0}    ┗━━━┷━━━┷━━━╅───┼───┼───╄━━━┓\n   ${C6}GOOD LUCK!${C0}   ┃${C2} S ${C0}│${C2} H ${C0}${C0}│${C6} I ${C0}│${C6} P ${C0}┃\n               ${C0} ┗━━━┷━━━┷━━━┷━━━┛ ">$SHARE_DIR/tui-battleship.log
+ if [[ $switch_populate == 1 ]];then PLACE_SHIPS='auto';load_grids;populate;PLACE_SHIPS=manual;switch_populate='';fi
+  echo -e "                        ${C0}┏━━━┯━━━┯━━━┓\n                        ${C0}┃ ${C2}T ${C0}│${C2} U ${C0}│${C2} I ${C0}┃\n                        ${C0}┗━━━╅───┼───╄━━━┯━━━┯━━━┯━━━┓\n                            ${C0}┃ ${C2}B ${C0}│${C2} A ${C0}│${C2} T ${C0}│${C2} T ${C0}│${C6} L ${C0}│${C6} E ${C0}┃\n                        ${C0}    ┗━━━┷━━━┷━━━╅───┼───┼───╄━━━┓\n                           ${C6}GOOD LUCK!${C0}   ┃${C2} S ${C0}│${C2} H ${C0}${C0}│${C6} I ${C0}│${C6} P ${C0}┃\n                                       ${C0} ┗━━━┷━━━┷━━━┷━━━┛ ">$SHARE_DIR/tui-battleship.log
 }
 
 function cpu_miss()
 {
- echo -e "${C4}Computer missed.            Hits:$CPU_HITS/$TOTAL Tries:$CPU_TRIES${n}">>$SHARE_DIR/tui-battleship.log
+ echo -e "                    ${C4}Computer missed.            Hits:$CPU_HITS/$TOTAL Tries:$CPU_TRIES${n}">>$SHARE_DIR/tui-battleship.log
  USR_F[$1]=" . "
  USR_X[$1]=${C5}
  print_matrix
@@ -420,26 +419,26 @@ function cpu_hit()
  USR_F[$1]=" X "
  USR_X[$1]=${C3}
  ((CPU_HITS++))
- echo -e "${C3}Computer hit a ship.        Hits:$CPU_HITS/$TOTAL Tries:$CPU_TRIES${n}">>$SHARE_DIR/tui-battleship.log
- if [[ ${USR_G[$1]} == "1" ]];then echo -e "${C3}${I}COMPUTER SANK YOUR DESTROYER(1).${n}">>$SHARE_DIR/tui-battleship.log;else((SHIP_HITS++));fi
+ echo -e "                    ${C3}Computer hit a ship.        Hits:$CPU_HITS/$TOTAL Tries:$CPU_TRIES${n}">>$SHARE_DIR/tui-battleship.log
+ if [[ ${USR_G[$1]} == "1" ]];then echo -e "                    ${C3}${I}COMPUTER SANK YOUR DESTROYER (1).${n}">>$SHARE_DIR/tui-battleship.log;else((SHIP_HITS++));fi
  print_matrix
  load_cheat
  [[ $LOG_TOGGLE == 'yes' ]]&&tail "$SHARE_DIR/tui-battleship.log"
- sleep 1
+# sleep 1
  cpu_play
 }
 
 function sink_ship()
 {
  case $FOLLOW in
- 2)ship="CRUISER(22)";
+ 2)ship="CRUISER (22)";
  ;;
- 3)ship="BATTLESHIP(333)"
+ 3)ship="BATTLESHIP (333)"
  ;;
- 4)ship="CARRIER(4444)"
+ 4)ship="CARRIER (4444)"
  ;;
  esac
- echo -e "${C3}${I}COMPUTER SANK YOUR $ship.${n}">>$SHARE_DIR/tui-battleship.log
+ echo -e "                    ${C3}${I}COMPUTER SANK YOUR $ship.${n}">>$SHARE_DIR/tui-battleship.log
  FOLLOW=0
  SHIP_HITS=0
  SQ0=0
@@ -553,13 +552,13 @@ function open_sq()
  if [[ ${CPU_G[CURSOR]} != 0 ]]
  then
   ((USR_HITS++))
-   echo -e "${C2}You hit a ship.             Hits:$USR_HITS/$TOTAL Tries:$USR_TRIES${n}">>$SHARE_DIR/tui-battleship.log
+   echo -e "                    ${C2}You hit a ship.             Hits:$USR_HITS/$TOTAL Tries:$USR_TRIES${n}">>$SHARE_DIR/tui-battleship.log
   print_matrix
   load_cheat
   [[ $LOG_TOGGLE == 'yes' ]]&&tail "$SHARE_DIR/tui-battleship.log"
   [[ $USR_HITS == $TOTAL ]]&&win_game
  else
-  echo -e "${C2}You missed.                 Hits:$USR_HITS/$TOTAL Tries:$USR_TRIES${n}">>$SHARE_DIR/tui-battleship.log
+  echo -e "                    ${C2}You missed.                 Hits:$USR_HITS/$TOTAL Tries:$USR_TRIES${n}">>$SHARE_DIR/tui-battleship.log
   print_matrix
   load_cheat
   [[ $LOG_TOGGLE == 'yes' ]]&&tail "$SHARE_DIR/tui-battleship.log"
@@ -613,24 +612,24 @@ clear
  mm=""
  while [[ "$mm" != "q" ]]
  do
-  echo -e "${C0}┏━━━┯━━━┯━━━┓"
-  echo -e "${C0}┃${I}${C5} T ${n}${C0}│${I}${C5} U ${n}${C0}│${I}${C5} I ${n}${C0}┃"
-  echo -e "${C0}┗━━━╅───┼───╄━━━┯━━━┯━━━┯━━━┓"
-  echo -e "${C0}    ┃${I}${C5} B ${n}${C0}│${I}${C5} A ${n}${C0}│${I}${C5} T ${n}${C0}│${I}${C5} T ${n}${C0}│${I}${C5} L ${n}${C0}│${I}${C5} E ${n}${C0}┃"
-  echo -e "${C0}    ┗━━━┷━━━┷━━━┷━━━╅───┼───╄━━━┯━━━┓"
-  echo -e "${C0}                    ┃${I}${C5} S ${n}${C0}│${I}${C5} H ${n}${C0}${n}${C0}│${I}${C5} I ${n}${C0}│${I}${C5} P ${n}${C0}┃"
-  echo -e "${C0}                    ┗━━━┷━━━┷━━━┷━━━┛"
-  echo -e "${C0}┏━━━┯━━━┯━━━┯━━━┯━━━┓╭──────────────╮"
-  echo -e "${C0}┃${C3} X ${C0}│${C5}░░░${C0}│${C5}░░░${C0}│${C5}░░░${C0}│${C1} 1 ${C0}┃│${C4} n   ${n}${C2} New Game${C0}│"
-  echo -e "${C0}┠───┼───┼───┼───┼───┨├──────────────┤"
-  echo -e "${C0}┃${C3} X ${C0}│${C5}░░░${C0}│${C2} 2 ${C0}│${C2} 2 ${C0}│${C5}░░░${C0}┃│${C4} e  ${n}${C2} Configure${C0}│"
-  echo -e "${C0}┠───┼───┼───┼───┼───┨├──────────────┤"
-  echo -e "${C0}┃${C6} 4 ${n}${C0}│${C5}░░░${C0}│${C5}░░░${C0}│${C5}░░░${C0}│${C4} 3 ${C0}┃│${C4} s  ${n}${C2}Show Stats${C0}│"
-  echo -e "${C0}┠───┼───┼───┼───┼───┨├──────────────┤"
-  echo -e "${C0}┃${C6} 4 ${n}${C0}│${C5}░░░${C0}│${C5}░░░${C0}│${C5}░░░${C0}│${C4} 3 ${C0}┃│${C4} r  ${n}${C2}Show Rules${C0}│"
-  echo -e "${C0}┠───┼───┼───┼───┼───┨├──────────────┤"
-  echo -e "${C0}┃${C5}░░░${n}${C0}│${C5}░░░${C0}│${C1} 1 ${C0}│${C5}░░░${C0}│${C4} 3 ${C0}┃│${C4} q      ${n}${C2}  Exit${C0}│"
-  echo -e "${C0}┗━━━┷━━━┷━━━┷━━━┷━━━┛╰──────────────╯${n}"
+  echo -e "                      ${C0}┏━━━┯━━━┯━━━┓"
+  echo -e "                      ${C0}┃${I}${C5} T ${n}${C0}│${I}${C5} U ${n}${C0}│${I}${C5} I ${n}${C0}┃"
+  echo -e "                      ${C0}┗━━━╅───┼───╄━━━┯━━━┯━━━┯━━━┓"
+  echo -e "                      ${C0}    ┃${I}${C5} B ${n}${C0}│${I}${C5} A ${n}${C0}│${I}${C5} T ${n}${C0}│${I}${C5} T ${n}${C0}│${I}${C5} L ${n}${C0}│${I}${C5} E ${n}${C0}┃"
+  echo -e "                      ${C0}    ┗━━━┷━━━┷━━━┷━━━╅───┼───╄━━━┯━━━┓"
+  echo -e "                      ${C0}                    ┃${I}${C5} S ${n}${C0}│${I}${C5} H ${n}${C0}${n}${C0}│${I}${C5} I ${n}${C0}│${I}${C5} P ${n}${C0}┃"
+  echo -e "                      ${C0}                    ┗━━━┷━━━┷━━━┷━━━┛"
+  echo -e "                      ${C0}┏━━━┯━━━┯━━━┯━━━┯━━━┓╭──────────────╮"
+  echo -e "                      ${C0}┃${C3} X ${C0}│${C5}░░░${C0}│${C5}░░░${C0}│${C5}░░░${C0}│${C1} 1 ${C0}┃│${C4} n   ${n}${C2} New Game${C0}│"
+  echo -e "                      ${C0}┠───┼───┼───┼───┼───┨├──────────────┤"
+  echo -e "                      ${C0}┃${C3} X ${C0}│${C5}░░░${C0}│${C2} 2 ${C0}│${C2} 2 ${C0}│${C5}░░░${C0}┃│${C4} e  ${n}${C2} Configure${C0}│"
+  echo -e "                      ${C0}┠───┼───┼───┼───┼───┨├──────────────┤"
+  echo -e "                      ${C0}┃${C6} 4 ${n}${C0}│${C5}░░░${C0}│${C5}░░░${C0}│${C5}░░░${C0}│${C4} 3 ${C0}┃│${C4} s  ${n}${C2}Show Stats${C0}│"
+  echo -e "                      ${C0}┠───┼───┼───┼───┼───┨├──────────────┤"
+  echo -e "                      ${C0}┃${C6} 4 ${n}${C0}│${C5}░░░${C0}│${C5}░░░${C0}│${C5}░░░${C0}│${C4} 3 ${C0}┃│${C4} r  ${n}${C2}Show Rules${C0}│"
+  echo -e "                      ${C0}┠───┼───┼───┼───┼───┨├──────────────┤"
+  echo -e "                      ${C0}┃${C5}░░░${n}${C0}│${C5}░░░${C0}│${C1} 1 ${C0}│${C5}░░░${C0}│${C4} 3 ${C0}┃│${C4} q      ${n}${C2}  Exit${C0}│"
+  echo -e "                      ${C0}┗━━━┷━━━┷━━━┷━━━┷━━━┛╰──────────────╯${n}"
   read -sn 1 mm
   case $mm in
    n|N)db="";new_game;play_menu;
@@ -639,7 +638,7 @@ clear
    ;;
    r|R)clear;instructions;clear;
    ;;
-   s|S)clear;show_hiscores;echo -e "\n ${C0}Press any key to return${n}";read -sN 1 v;clear;
+   s|S)clear;show_hiscores;echo -e "\n                            ${C0}Press any key to return${n}";read -sN 1 v;clear;
    ;;
    q|Q)clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "Exited tui-battleship.";
    ;;
