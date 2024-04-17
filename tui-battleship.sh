@@ -50,7 +50,7 @@ function show_hiscores ()
   ii=31;i=1;
   while [[ $i -le $TOP_10_LENGTH ]]
   do
-   echo -e '                              \e['${ii}m$i $(sort -h "$SHARE_DIR/hiscores.txt" |head -$i|tail +$i)
+   echo -e '                             \e['${ii}m$i $(sort -h "$SHARE_DIR/hiscores.txt" |head -$i|tail +$i)
    sleep 0.3
    ((i++));((ii++))
    if [[ $ii -gt 36 ]];then ii=31;fi;
@@ -226,7 +226,7 @@ function man_place()
 
 function placing_dialog()
 {
- echo -e "${C2}Which type of vessel do you want to place starting from the selected square?\nHit:"
+ echo -e "${C2}Which type of vessel do you want to place\nstarting from the selected square?   Hit:"
  [[ $((CARRIERS-PICKED4)) -gt 0 ]]&&echo -e "      ${I}${C6} 4 ${n}${C6} for Carrier    (4444) horizontal ($((CARRIERS-PICKED4)) available)"
  [[ $((CARRIERS-PICKED4)) -gt 0 ]]&&echo -e "${I}${C6}shift${n}${C6}+${I}${C6} 4 ${n}${C6} for Carrier    (4444) vertical   ($((CARRIERS-PICKED4)) available)"
  [[ $((BATTLESHIPS-PICKED3)) -gt 0 ]]&&echo -e "      ${I}${C4} 3 ${n}${C4} for Battleship (333)  horizontal ($((BATTLESHIPS-PICKED3)) available)"
@@ -638,7 +638,7 @@ clear
    ;;
    r|R)clear;instructions;clear;
    ;;
-   s|S)clear;show_hiscores;echo -e "\n                            ${C0}Press any key to return${n}";read -sN 1 v;clear;
+   s|S)clear;show_hiscores;echo -e "\n                           ${C0}Press any key to return${n}";read -sN 1 v;clear;
    ;;
    q|Q)clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "Exited tui-battleship.";
    ;;
